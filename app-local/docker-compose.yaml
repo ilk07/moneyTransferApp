@@ -1,0 +1,17 @@
+version: '3'
+services:
+  backend:
+    image: money-transfer
+    build: .
+    ports:
+      - '5500:5500'
+    environment:
+      port: 5500
+      transfer.tax.fee: 1
+      transfer.log.filename: transfer-journal.log
+  frontend:
+    build: card-transfer-front
+    ports:
+      - '3000:3000'
+    depends_on:
+      - backend

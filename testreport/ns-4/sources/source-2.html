@@ -1,0 +1,159 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > TransferConfirmationDTO</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">cp.moneytransferapp.dto.cardtocard</a>
+</div>
+
+<h1>Coverage Summary for Class: TransferConfirmationDTO (cp.moneytransferapp.dto.cardtocard)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TransferConfirmationDTO</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">TransferConfirmationDTO$MockitoMock$Wu8qJHEV</td>
+  </tr>
+  <tr>
+    <td class="name">TransferConfirmationDTO$MockitoMock$Wu8qJHEV$auxiliary$BtjWfmJ1</td>
+  </tr>
+  <tr>
+    <td class="name">TransferConfirmationDTO$MockitoMock$Wu8qJHEV$auxiliary$hOpiMPgC</td>
+  </tr>
+  <tr>
+    <td class="name">TransferConfirmationDTO$MockitoMock$Wu8qJHEV$auxiliary$ME6JYVQY</td>
+  </tr>
+  <tr>
+    <td class="name">TransferConfirmationDTO$MockitoMock$Wu8qJHEV$auxiliary$OxoZUwZd</td>
+  </tr>
+  <tr>
+    <td class="name">TransferConfirmationDTO$MockitoMock$Wu8qJHEV$auxiliary$UoWcA5O7</td>
+  </tr>
+  <tr>
+    <td class="name">TransferConfirmationDTO$MockitoMock$Wu8qJHEV$auxiliary$yBSLfKAh</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package cp.moneytransferapp.dto.cardtocard;
+&nbsp;
+&nbsp;import lombok.*;
+&nbsp;
+&nbsp;import javax.validation.constraints.NotEmpty;
+&nbsp;import javax.validation.constraints.NotNull;
+&nbsp;import javax.validation.constraints.Pattern;
+&nbsp;
+&nbsp;
+&nbsp;@Getter
+<b class="fc">&nbsp;@Setter</b>
+&nbsp;public class TransferConfirmationDTO {
+&nbsp;
+&nbsp;    @NotEmpty(message = &quot;Empty operation id&quot;)
+&nbsp;    @NotNull(message = &quot;Operation id is null&quot;)
+&nbsp;    @Pattern(regexp = &quot;^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$&quot;, message = &quot;Wrong operation Id&quot;)
+<b class="fc">&nbsp;    private String operationId;</b>
+&nbsp;
+&nbsp;    @NotEmpty(message = &quot;Empty code&quot;)
+&nbsp;    @NotNull(message = &quot;Code is null&quot;)
+&nbsp;    @Pattern(regexp = &quot;^[0-9]{4}$&quot;, message = &quot;Wrong verification code&quot;)
+<b class="fc">&nbsp;    private String code;</b>
+&nbsp;
+<b class="fc">&nbsp;    public TransferConfirmationDTO(){</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-04-27 12:13</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+version: '3'
+services:
+  moneytransfer:
+    image: money-transfer
+    build: .
+    ports:
+      - '5500:5500'
+    environment:
+      port: 5500
+      transfer.tax.fee: 1
+      transfer.log.filename: transfer-journal.log

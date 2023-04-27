@@ -1,0 +1,164 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > TransferRepositoryInMemory</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">cp.moneytransferapp.repository.impl</a>
+</div>
+
+<h1>Coverage Summary for Class: TransferRepositoryInMemory (cp.moneytransferapp.repository.impl)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TransferRepositoryInMemory</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    90%
+  </span>
+  <span class="absValue">
+    (9/10)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">TransferRepositoryInMemory$MockitoMock$EycQK6ZK</td>
+  </tr>
+  <tr>
+    <td class="name">TransferRepositoryInMemory$MockitoMock$EycQK6ZK$auxiliary$0JyAzH0M</td>
+  </tr>
+  <tr>
+    <td class="name">TransferRepositoryInMemory$MockitoMock$EycQK6ZK$auxiliary$gTWHlBYU</td>
+  </tr>
+  <tr>
+    <td class="name">TransferRepositoryInMemory$MockitoMock$EycQK6ZK$auxiliary$rv3qfNS0</td>
+  </tr>
+  <tr>
+    <td class="name">TransferRepositoryInMemory$MockitoMock$EycQK6ZK$auxiliary$Ug3J15uQ</td>
+  </tr>
+  <tr>
+    <td class="name">TransferRepositoryInMemory$MockitoMock$EycQK6ZK$auxiliary$WLUL7k9u</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    90%
+  </span>
+  <span class="absValue">
+    (9/10)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package cp.moneytransferapp.repository.impl;
+&nbsp;
+&nbsp;import cp.moneytransferapp.entities.CardToCardMoneyTransfer;
+&nbsp;import cp.moneytransferapp.repository.TransferRepository;
+&nbsp;import org.springframework.stereotype.Repository;
+&nbsp;
+&nbsp;import java.util.Map;
+&nbsp;import java.util.Optional;
+&nbsp;import java.util.concurrent.ConcurrentHashMap;
+&nbsp;
+&nbsp;@Repository
+<b class="fc">&nbsp;public class TransferRepositoryInMemory implements TransferRepository {</b>
+<b class="fc">&nbsp;    private final Map&lt;String, CardToCardMoneyTransfer&gt; cardToCardTransferList = new ConcurrentHashMap&lt;&gt;();</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Optional&lt;CardToCardMoneyTransfer&gt; getCardToCardMoneyTransferByTransferId(String transferId) {
+<b class="fc">&nbsp;        return Optional.ofNullable(cardToCardTransferList.get(transferId));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean saveTransfer(CardToCardMoneyTransfer cardToCardMoneyTransfer) {
+<b class="fc">&nbsp;        cardToCardTransferList.put(cardToCardMoneyTransfer.getTransferId(), cardToCardMoneyTransfer);</b>
+<b class="fc">&nbsp;        if(cardToCardTransferList.containsKey(cardToCardMoneyTransfer.getTransferId())){</b>
+<b class="fc">&nbsp;            return true;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean isTransferInList(String transferId) {
+<b class="fc">&nbsp;        if (cardToCardTransferList.containsKey(transferId)) {</b>
+<b class="fc">&nbsp;            return true;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-04-27 12:13</div>
+</div>
+</body>
+</html>
