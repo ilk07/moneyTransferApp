@@ -1,8 +1,10 @@
 package cp.moneytransferapp.logger.impl;
 
+import cp.moneytransferapp.config.AppProperties;
 import cp.moneytransferapp.logger.TransferJournal;
+import lombok.Getter;
 import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedWriter;
@@ -11,19 +13,19 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@Component
+@Getter
 @Setter
-@ConfigurationProperties("transfer.log")
+@Component
 public class TransferLogger implements TransferJournal {
 
-    private static String filename;
+    @Autowired
+    AppProperties appProperties;
+
     private static TransferLogger INSTANCE = null;
 
     DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-
-    private TransferLogger() {
-    }
+    private TransferLogger() {}
 
     public static TransferLogger getInstance() {
         if (INSTANCE == null) {
@@ -36,19 +38,12 @@ public class TransferLogger implements TransferJournal {
         return INSTANCE;
     }
 
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-
-    public String getFilename() {
-        return filename;
-    }
-
     private String createLogMessage(String msg) {
         return LocalDateTime.now().format(format) + "[Transfer->" + msg + "]";
     }
-    private void writeToFile(String msg){
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename, true))) {
+
+    public void writeToFile(String msg) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(appProperties.getLogFilename(), true))) {
             bw.write(createLogMessage(msg));
             bw.write('\n');
             bw.flush();
