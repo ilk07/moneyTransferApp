@@ -2,16 +2,15 @@ package cp.moneytransferapp.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Getter
-@AllArgsConstructor
-@ToString
+@RequiredArgsConstructor
 public class TransferConfirmation {
-
     @NotEmpty(message = "Empty operation id")
     @NotNull(message = "Operation id is null")
     @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$", message = "Wrong operation Id")
