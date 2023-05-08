@@ -1,17 +1,16 @@
 package cp.moneytransferapp.entities;
 
-import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+
 import java.util.UUID;
 
-@Getter
 @ToString
+@NoArgsConstructor
 public abstract class Transfer {
-    private final UUID transferId;
-    public Transfer() {
-        this.transferId = UUID.randomUUID();
-    }
-    public String getTransferId(){
+    private final UUID transferId = UUID.randomUUID();
+    public String getTransferId() {
         return transferId.toString();
     }
 }
