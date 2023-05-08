@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > DefaultCardToCardMoneyTransferBuilder</title>
+  <title>Coverage Report > CardToCardMoneyTransferDTO</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -18,10 +18,10 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">cp.moneytransferapp.dto.cardtocard.impl</a>
+    <a href="../index.html">cp.moneytransferapp.dto.cardtocard</a>
 </div>
 
-<h1>Coverage Summary for Class: DefaultCardToCardMoneyTransferBuilder (cp.moneytransferapp.dto.cardtocard.impl)</h1>
+<h1>Coverage Summary for Class: CardToCardMoneyTransferDTO (cp.moneytransferapp.dto.cardtocard)</h1>
 
 <table class="coverageStats">
 
@@ -37,13 +37,13 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">DefaultCardToCardMoneyTransferBuilder</td>
+  <td class="name">CardToCardMoneyTransferDTO</td>
 <td class="coverageStat">
   <span class="percent">
     100%
   </span>
   <span class="absValue">
-    (7/7)
+    (6/6)
   </span>
 </td>
 <td class="coverageStat">
@@ -51,36 +51,33 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (15/15)
+    (6/6)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">DefaultCardToCardMoneyTransferBuilder$MockitoMock$NLeP6oiH</td>
+    <td class="name">CardToCardMoneyTransferDTO$MockitoMock$pwEMyayn</td>
   </tr>
   <tr>
-    <td class="name">DefaultCardToCardMoneyTransferBuilder$MockitoMock$NLeP6oiH$auxiliary$5aTTRFC1</td>
+    <td class="name">CardToCardMoneyTransferDTO$MockitoMock$pwEMyayn$auxiliary$D67GiU0e</td>
   </tr>
   <tr>
-    <td class="name">DefaultCardToCardMoneyTransferBuilder$MockitoMock$NLeP6oiH$auxiliary$7s4FNO28</td>
+    <td class="name">CardToCardMoneyTransferDTO$MockitoMock$pwEMyayn$auxiliary$GvvcnLdE</td>
   </tr>
   <tr>
-    <td class="name">DefaultCardToCardMoneyTransferBuilder$MockitoMock$NLeP6oiH$auxiliary$CZKBMvY9</td>
+    <td class="name">CardToCardMoneyTransferDTO$MockitoMock$pwEMyayn$auxiliary$n3HWnLVw</td>
   </tr>
   <tr>
-    <td class="name">DefaultCardToCardMoneyTransferBuilder$MockitoMock$NLeP6oiH$auxiliary$dimc1Dfc</td>
+    <td class="name">CardToCardMoneyTransferDTO$MockitoMock$pwEMyayn$auxiliary$OiF0gL0b</td>
   </tr>
   <tr>
-    <td class="name">DefaultCardToCardMoneyTransferBuilder$MockitoMock$NLeP6oiH$auxiliary$eVdesi9E</td>
+    <td class="name">CardToCardMoneyTransferDTO$MockitoMock$pwEMyayn$auxiliary$y5PpHBTQ</td>
   </tr>
   <tr>
-    <td class="name">DefaultCardToCardMoneyTransferBuilder$MockitoMock$NLeP6oiH$auxiliary$OVsP8xeW</td>
+    <td class="name">CardToCardMoneyTransferDTO$MockitoMock$pwEMyayn$auxiliary$yc3218e5</td>
   </tr>
   <tr>
-    <td class="name">DefaultCardToCardMoneyTransferBuilder$MockitoMock$NLeP6oiH$auxiliary$TiqCy9uY</td>
-  </tr>
-  <tr>
-    <td class="name">DefaultCardToCardMoneyTransferBuilder$MockitoMock$NLeP6oiH$auxiliary$yiRKXO3I</td>
+    <td class="name">CardToCardMoneyTransferDTO$MockitoMock$pwEMyayn$auxiliary$ZijiGI6o</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
@@ -89,7 +86,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (7/7)
+    (6/6)
   </span>
 </td>
 <td class="coverageStat">
@@ -97,7 +94,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (15/15)
+    (6/6)
   </span>
 </td>
 </tr>
@@ -108,58 +105,37 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package cp.moneytransferapp.dto.cardtocard.impl;
+<code class="sourceCode" id="sourceCode">&nbsp;package cp.moneytransferapp.dto.cardtocard;
 &nbsp;
-&nbsp;import cp.moneytransferapp.dto.cardtocard.CardToCardMoneyTransferDTO;
-&nbsp;import cp.moneytransferapp.dto.cardtocard.CardToCardMoneyTransferDTOBuilder;
-&nbsp;import cp.moneytransferapp.dto.cardtocard.TransferConfirmationDTO;
-&nbsp;import cp.moneytransferapp.entities.CardToCardMoneyTransfer;
-&nbsp;import cp.moneytransferapp.entities.TransferConfirmation;
-&nbsp;import cp.moneytransferapp.entities.TransferOperationId;
-&nbsp;import lombok.NoArgsConstructor;
-&nbsp;import org.springframework.boot.context.properties.ConfigurationProperties;
-&nbsp;import org.springframework.stereotype.Component;
+&nbsp;import cp.moneytransferapp.entities.Amount;
+&nbsp;import lombok.*;
+&nbsp;import org.hibernate.validator.constraints.CreditCardNumber;
+&nbsp;import javax.validation.constraints.NotEmpty;
+&nbsp;import javax.validation.constraints.NotNull;
+&nbsp;import javax.validation.constraints.Pattern;
 &nbsp;
-&nbsp;@Component
-&nbsp;@ConfigurationProperties(&quot;transfer.tax&quot;)
-<b class="fc">&nbsp;@NoArgsConstructor</b>
-&nbsp;public class DefaultCardToCardMoneyTransferBuilder implements CardToCardMoneyTransferDTOBuilder {
+&nbsp;@Setter
+&nbsp;@Getter
+<b class="fc">&nbsp;@AllArgsConstructor</b>
+&nbsp;public class CardToCardMoneyTransferDTO {
+&nbsp;    @NotEmpty(message = &quot;Sender card number is empty&quot;)
+&nbsp;    @CreditCardNumber(message = &quot;Wrong sender card number&quot;)
+<b class="fc">&nbsp;    private final String cardFromNumber;</b>
 &nbsp;
-&nbsp;    private double fee;
-&nbsp;    public void setFee(double fee) {
-<b class="fc">&nbsp;        this.fee = fee;</b>
-&nbsp;    }
-&nbsp;    public double getFee() {
-<b class="fc">&nbsp;        return fee;</b>
-&nbsp;    }
-&nbsp;    protected int calculateFee(int value) {
-<b class="fc">&nbsp;        return (int) ((fee / 100) * value);</b>
-&nbsp;    }
+&nbsp;    @NotEmpty(message = &quot;Receiver card number is empty&quot;)
+&nbsp;    @CreditCardNumber(message = &quot;Wrong receiver card number&quot;)
+<b class="fc">&nbsp;    private final String cardToNumber;</b>
 &nbsp;
-&nbsp;    @Override
-&nbsp;    public CardToCardMoneyTransfer cardToCardMoneyTransferFromDTO(CardToCardMoneyTransferDTO cardToCardMoneyTransferDTO) {
-<b class="fc">&nbsp;        return new CardToCardMoneyTransfer(</b>
-<b class="fc">&nbsp;                cardToCardMoneyTransferDTO.getCardFromNumber(),</b>
-<b class="fc">&nbsp;                cardToCardMoneyTransferDTO.getCardToNumber(),</b>
-<b class="fc">&nbsp;                cardToCardMoneyTransferDTO.getCardFromCVV(),</b>
-<b class="fc">&nbsp;                cardToCardMoneyTransferDTO.getCardFromValidTill(),</b>
-<b class="fc">&nbsp;                cardToCardMoneyTransferDTO.getAmount(),</b>
-<b class="fc">&nbsp;                calculateFee(cardToCardMoneyTransferDTO.getAmount().getValue())</b>
-&nbsp;        );
-&nbsp;    }
+&nbsp;    @NotEmpty(message = &quot;CVV code is empty&quot;)
+&nbsp;    @Pattern(regexp = &quot;^[0-9]{3}$&quot;, message = &quot;Wrong CVV code&quot;)
+<b class="fc">&nbsp;    private final String cardFromCVV;</b>
 &nbsp;
-&nbsp;    @Override
-&nbsp;    public TransferOperationId transferOperationIdFromCardToCardMoneyTransfer(CardToCardMoneyTransfer cardToCardMoneyTransfer) {
-<b class="fc">&nbsp;        return new TransferOperationId(cardToCardMoneyTransfer.getTransferId());</b>
-&nbsp;    }
+&nbsp;    @NotEmpty(message = &quot;Card valid date is empty&quot;)
+&nbsp;    @Pattern(regexp = &quot;(0[1-9]|1[0-2])/([0-9]{2})&quot;, message = &quot;Card valid date error&quot;)
+<b class="fc">&nbsp;    private final String cardFromValidTill;</b>
 &nbsp;
-&nbsp;    @Override
-&nbsp;    public TransferConfirmation transferConfirmationFromDTO(TransferConfirmationDTO transferConfirmationDTO) {
-<b class="fc">&nbsp;        return new TransferConfirmation(</b>
-<b class="fc">&nbsp;                transferConfirmationDTO.getOperationId(),</b>
-<b class="fc">&nbsp;                transferConfirmationDTO.getCode()</b>
-&nbsp;        );
-&nbsp;    }
+&nbsp;    @NotNull(message = &quot;Amount is empty, Currency is empty&quot;)
+<b class="fc">&nbsp;    private final Amount amount;</b>
 &nbsp;
 &nbsp;}
 </code>
@@ -185,7 +161,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-04-27 12:13</div>
+    <div style="float:right;">generated on 2023-05-08 18:01</div>
 </div>
 </body>
 </html>

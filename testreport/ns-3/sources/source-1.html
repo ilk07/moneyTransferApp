@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > DefaultTransferController</title>
+  <title>Coverage Report > AppProperties</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -18,18 +18,15 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">cp.moneytransferapp.controller</a>
+    <a href="../index.html">cp.moneytransferapp.config</a>
 </div>
 
-<h1>Coverage Summary for Class: DefaultTransferController (cp.moneytransferapp.controller)</h1>
+<h1>Coverage Summary for Class: AppProperties (cp.moneytransferapp.config)</h1>
 
 <table class="coverageStats">
+
 <tr>
   <th class="name">Class</th>
-<th class="coverageStat 
-">
-  Class, %
-</th>
 <th class="coverageStat 
 ">
   Method, %
@@ -40,13 +37,13 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">DefaultTransferController</td>
+  <td class="name">AppProperties</td>
 <td class="coverageStat">
   <span class="percent">
     100%
   </span>
   <span class="absValue">
-    (1/1)
+    (5/5)
   </span>
 </td>
 <td class="coverageStat">
@@ -54,19 +51,53 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (3/3)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    100%
-  </span>
-  <span class="absValue">
-    (8/8)
+    (5/5)
   </span>
 </td>
 </tr>
-
+  <tr>
+    <td class="name">AppProperties$$EnhancerBySpringCGLIB$$fc333c7</td>
+  </tr>
+  <tr>
+    <td class="name">AppProperties$MockitoMock$7p5wnOKN</td>
+  </tr>
+  <tr>
+    <td class="name">AppProperties$MockitoMock$7p5wnOKN$auxiliary$5dNkOMGm</td>
+  </tr>
+  <tr>
+    <td class="name">AppProperties$MockitoMock$7p5wnOKN$auxiliary$ctzx0T1j</td>
+  </tr>
+  <tr>
+    <td class="name">AppProperties$MockitoMock$7p5wnOKN$auxiliary$JbbFOlFu</td>
+  </tr>
+  <tr>
+    <td class="name">AppProperties$MockitoMock$7p5wnOKN$auxiliary$K3QUGqaS</td>
+  </tr>
+  <tr>
+    <td class="name">AppProperties$MockitoMock$7p5wnOKN$auxiliary$sCOrHkPk</td>
+  </tr>
+  <tr>
+    <td class="name">AppProperties$MockitoMock$7p5wnOKN$auxiliary$VNFwNj4N</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+</tr>
 </table>
 
 <br/>
@@ -74,49 +105,32 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package cp.moneytransferapp.controller;
+<code class="sourceCode" id="sourceCode">&nbsp;package cp.moneytransferapp.config;
 &nbsp;
-&nbsp;import cp.moneytransferapp.dto.cardtocard.CardToCardMoneyTransferDTO;
-&nbsp;import cp.moneytransferapp.dto.cardtocard.TransferConfirmationDTO;
-&nbsp;import cp.moneytransferapp.dto.cardtocard.impl.DefaultCardToCardMoneyTransferBuilder;
-&nbsp;import cp.moneytransferapp.entities.CardToCardMoneyTransfer;
-&nbsp;import cp.moneytransferapp.entities.TransferConfirmation;
-&nbsp;import cp.moneytransferapp.entities.TransferOperationId;
-&nbsp;import cp.moneytransferapp.service.impl.DefaultTransferService;
-&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;import org.springframework.boot.context.properties.ConfigurationProperties;
+&nbsp;import org.springframework.context.annotation.Configuration;
 &nbsp;
-&nbsp;import javax.validation.Valid;
+&nbsp;@Configuration
+&nbsp;@ConfigurationProperties(prefix = &quot;transfer&quot;)
+<b class="fc">&nbsp;public class AppProperties {</b>
+&nbsp;    private String logFilename;
+&nbsp;    private double taxFee;
 &nbsp;
-&nbsp;
-&nbsp;@RestController
-&nbsp;@RequestMapping(&quot;/&quot;)
-&nbsp;@CrossOrigin(&quot;http://localhost:3000&quot;)
-&nbsp;public class DefaultTransferController {
-&nbsp;    private final DefaultCardToCardMoneyTransferBuilder transferDTOBuilder;
-&nbsp;    private final DefaultTransferService service;
-&nbsp;
-&nbsp;
-<b class="fc">&nbsp;    public DefaultTransferController(DefaultCardToCardMoneyTransferBuilder cardToCardMoneyTransferBuilder, DefaultTransferService service) {</b>
-<b class="fc">&nbsp;        this.transferDTOBuilder = cardToCardMoneyTransferBuilder;</b>
-<b class="fc">&nbsp;        this.service = service;</b>
-&nbsp;
+&nbsp;    public String getLogFilename() {
+<b class="fc">&nbsp;        return logFilename;</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    @PostMapping(value = &quot;transfer&quot;, consumes = &quot;application/json&quot;, produces = &quot;application/json&quot;)
-&nbsp;    public TransferOperationId cardToCardMoneyTransfer(@Valid @RequestBody CardToCardMoneyTransferDTO cardToCardMoneyTransferDTO) {
-<b class="fc">&nbsp;        CardToCardMoneyTransfer cardToCardMoneyTransfer = transferDTOBuilder.cardToCardMoneyTransferFromDTO(cardToCardMoneyTransferDTO);</b>
-&nbsp;
-<b class="fc">&nbsp;        return transferDTOBuilder.transferOperationIdFromCardToCardMoneyTransfer(service.transferRequest(cardToCardMoneyTransfer));</b>
+&nbsp;    public void setLogFilename(String logFilename) {
+<b class="fc">&nbsp;        this.logFilename = logFilename;</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    @PostMapping(value = &quot;confirmOperation&quot;, consumes = &quot;application/json&quot;, produces = &quot;application/json&quot;)
-&nbsp;    public TransferOperationId confirmTransferOperation(@Valid @RequestBody TransferConfirmationDTO transferConfirmationDto) {
-<b class="fc">&nbsp;        TransferConfirmation transferConfirmation = transferDTOBuilder.transferConfirmationFromDTO(transferConfirmationDto);</b>
-<b class="fc">&nbsp;        CardToCardMoneyTransfer cardToCardMoneyTransfer = service.confirmTransferOperation(transferConfirmation);</b>
-&nbsp;
-<b class="fc">&nbsp;        return transferDTOBuilder.transferOperationIdFromCardToCardMoneyTransfer(cardToCardMoneyTransfer);</b>
+&nbsp;    public double getTaxFee() {
+<b class="fc">&nbsp;        return taxFee;</b>
 &nbsp;    }
 &nbsp;
+&nbsp;    public void setTaxFee(double taxFee) {
+<b class="fc">&nbsp;        this.taxFee = taxFee;</b>
+&nbsp;    }
 &nbsp;}
 </code>
 </pre>
@@ -141,7 +155,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-04-27 12:13</div>
+    <div style="float:right;">generated on 2023-05-08 18:01</div>
 </div>
 </body>
 </html>

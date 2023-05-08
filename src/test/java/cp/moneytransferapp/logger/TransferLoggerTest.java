@@ -37,19 +37,6 @@ class TransferLoggerTest {
     }
 
     @Test
-    @DisplayName("Filename getter return given test name")
-    void setAndGetFilename_shouldReturnGivenTestName() {
-
-        String filename = "testTransferFileName.log";
-        sut.setFilename(filename);
-
-        String expected = filename;
-        String actual = sut.getFilename();
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
     @DisplayName("Log test message with custom text content")
     void createLogMessage_shouldContainsTestMessageText() {
         try {

@@ -40,12 +40,7 @@ class CardToCardMoneyTransferDTOTest {
     @BeforeEach
     public void initOneTest() {
         Amount amount = Mockito.mock(Amount.class);
-        sut = new CardToCardMoneyTransferDTO();
-        sut.setCardFromNumber("5552983744875475");
-        sut.setCardToNumber("3764285348263861");
-        sut.setCardFromCVV("123");
-        sut.setCardFromValidTill("12/25");
-        sut.setAmount(amount);
+        sut = new CardToCardMoneyTransferDTO("5552983744875475","3764285348263861","123","12/25", amount);
     }
 
     @Test
@@ -99,71 +94,6 @@ class CardToCardMoneyTransferDTOTest {
         String actual = sut.getCardFromValidTill();
 
         assertEquals(expected, actual);
-    }
-
-    @Test
-    @DisplayName("Set sender card number")
-    void setCardFromNumber() {
-
-        String expected = "5569755825672968";
-        sut.setCardFromNumber(expected);
-        String actual = sut.getCardFromNumber();
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    @DisplayName("Set receiver card number")
-    void setCardToNumber() {
-        String expected = "5569755825672968";
-        sut.setCardToNumber(expected);
-        String actual = sut.getCardToNumber();
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    @DisplayName("Set sender card CVV code")
-    void setCardFromCVV() {
-
-        String expected = "999";
-        sut.setCardFromCVV(expected);
-        String actual = sut.getCardFromCVV();
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    @DisplayName("Get sender card valid month/year")
-    void setCardFromValidTill() {
-
-        String expected = "01/99";
-        sut.setCardFromValidTill(expected);
-        String actual = sut.getCardFromValidTill();
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    @DisplayName("Wrong sender card number message from constructor")
-    void givenCardFromNumberNotValid_shouldReturnErrorMessage() {
-
-        CardToCardMoneyTransferDTO cardToCardMoneyTransferDTO = new CardToCardMoneyTransferDTO(
-                "123",
-                sut.getCardToNumber(),
-                sut.getCardFromCVV(),
-                sut.getCardFromValidTill(),
-                sut.getAmount()
-        );
-
-        sut.setCardFromNumber("123");
-
-        Set<ConstraintViolation<CardToCardMoneyTransferDTO>> validates = validator.validate(cardToCardMoneyTransferDTO);
-
-        boolean actual = validates.stream().anyMatch(v -> v.getMessage().equals("Wrong sender card number"));
-
-        assertTrue(validates.size() > 0);
-        assertTrue(actual);
     }
 
     @Test

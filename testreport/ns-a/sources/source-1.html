@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > DefaultTransferService</title>
+  <title>Coverage Report > TransferRepositoryInMemory</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -18,10 +18,10 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">cp.moneytransferapp.service.impl</a>
+    <a href="../index.html">cp.moneytransferapp.repository.impl</a>
 </div>
 
-<h1>Coverage Summary for Class: DefaultTransferService (cp.moneytransferapp.service.impl)</h1>
+<h1>Coverage Summary for Class: TransferRepositoryInMemory (cp.moneytransferapp.repository.impl)</h1>
 
 <table class="coverageStats">
 
@@ -37,44 +37,41 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">DefaultTransferService</td>
+  <td class="name">TransferRepositoryInMemory</td>
 <td class="coverageStat">
   <span class="percent">
     100%
   </span>
   <span class="absValue">
-    (5/5)
+    (4/4)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    90%
   </span>
   <span class="absValue">
-    (21/21)
+    (9/10)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">DefaultTransferService$MockitoMock$CmgnLLSL</td>
+    <td class="name">TransferRepositoryInMemory$MockitoMock$J6FT3M9N</td>
   </tr>
   <tr>
-    <td class="name">DefaultTransferService$MockitoMock$CmgnLLSL$auxiliary$9TC6C4Sz</td>
+    <td class="name">TransferRepositoryInMemory$MockitoMock$J6FT3M9N$auxiliary$HenjFUY6</td>
   </tr>
   <tr>
-    <td class="name">DefaultTransferService$MockitoMock$CmgnLLSL$auxiliary$Ah7dVqwP</td>
+    <td class="name">TransferRepositoryInMemory$MockitoMock$J6FT3M9N$auxiliary$LHRvZkCh</td>
   </tr>
   <tr>
-    <td class="name">DefaultTransferService$MockitoMock$CmgnLLSL$auxiliary$OhNo5EHq</td>
+    <td class="name">TransferRepositoryInMemory$MockitoMock$J6FT3M9N$auxiliary$QiXIJqxd</td>
   </tr>
   <tr>
-    <td class="name">DefaultTransferService$MockitoMock$CmgnLLSL$auxiliary$tAhlrPjj</td>
+    <td class="name">TransferRepositoryInMemory$MockitoMock$J6FT3M9N$auxiliary$Qm8If4NN</td>
   </tr>
   <tr>
-    <td class="name">DefaultTransferService$MockitoMock$CmgnLLSL$auxiliary$WpiaPeXe</td>
-  </tr>
-  <tr>
-    <td class="name">DefaultTransferService$MockitoMock$CmgnLLSL$auxiliary$Z05qudyQ</td>
+    <td class="name">TransferRepositoryInMemory$MockitoMock$J6FT3M9N$auxiliary$WG6JvTLg</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
@@ -83,15 +80,15 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (5/5)
+    (4/4)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    90%
   </span>
   <span class="absValue">
-    (21/21)
+    (9/10)
   </span>
 </td>
 </tr>
@@ -102,74 +99,41 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package cp.moneytransferapp.service.impl;
+<code class="sourceCode" id="sourceCode">&nbsp;package cp.moneytransferapp.repository.impl;
 &nbsp;
-&nbsp;import cp.moneytransferapp.exception.OutOfService;
-&nbsp;import cp.moneytransferapp.logger.impl.TransferLogger;
 &nbsp;import cp.moneytransferapp.entities.CardToCardMoneyTransfer;
-&nbsp;import cp.moneytransferapp.entities.TransferConfirmation;
-&nbsp;import cp.moneytransferapp.entities.TransferStatus;
-&nbsp;import cp.moneytransferapp.repository.impl.TransferRepositoryInMemory;
-&nbsp;import cp.moneytransferapp.service.TransferService;
-&nbsp;import org.springframework.stereotype.Service;
+&nbsp;import cp.moneytransferapp.repository.TransferRepository;
+&nbsp;import org.springframework.stereotype.Repository;
 &nbsp;
-&nbsp;@Service
-&nbsp;public class DefaultTransferService implements TransferService {
-&nbsp;    final TransferRepositoryInMemory repository;
-<b class="fc">&nbsp;    protected TransferLogger transferJournal = TransferLogger.getInstance();</b>
+&nbsp;import java.util.Map;
+&nbsp;import java.util.Optional;
+&nbsp;import java.util.concurrent.ConcurrentHashMap;
 &nbsp;
+&nbsp;@Repository
+<b class="fc">&nbsp;public class TransferRepositoryInMemory implements TransferRepository {</b>
+<b class="fc">&nbsp;    private final Map&lt;String, CardToCardMoneyTransfer&gt; cardToCardTransferList = new ConcurrentHashMap&lt;&gt;();</b>
 &nbsp;
-<b class="fc">&nbsp;    public DefaultTransferService(TransferRepositoryInMemory repository) {</b>
-<b class="fc">&nbsp;        this.repository = repository;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public CardToCardMoneyTransfer transferRequest(CardToCardMoneyTransfer cardToCardMoneyTransfer) {
-&nbsp;
-<b class="fc">&nbsp;        cardToCardMoneyTransfer.setVerificationCode(verificationCode());</b>
-&nbsp;
-<b class="fc">&nbsp;        if (this.repository.saveTransfer(cardToCardMoneyTransfer)) {</b>
-&nbsp;
-<b class="fc">&nbsp;            transferJournal.logToJournal(cardToCardMoneyTransfer.toString());</b>
-<b class="fc">&nbsp;            return cardToCardMoneyTransfer;</b>
-&nbsp;
-&nbsp;        }
-&nbsp;
-<b class="fc">&nbsp;        throw new OutOfService(&quot;Service unavailable&quot;);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public CardToCardMoneyTransfer confirmTransferOperation(TransferConfirmation transferConfirmation) {
-&nbsp;
-<b class="fc">&nbsp;        CardToCardMoneyTransfer cardToCardMoneyTransfer = this.repository.getCardToCardMoneyTransferByTransferId(transferConfirmation.getOperationId())</b>
-<b class="fc">&nbsp;                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Unknown transfer id&quot;));</b>
-&nbsp;
-<b class="fc">&nbsp;        if (cardToCardMoneyTransfer.getStatus().equals(TransferStatus.AWAITING_CONFIRMATION)) {</b>
-<b class="fc">&nbsp;            if (cardToCardMoneyTransfer.getVerificationCode().equals(transferConfirmation.getCode())) {</b>
-<b class="fc">&nbsp;                cardToCardMoneyTransfer.setStatus(TransferStatus.CONFIRMED_TRANSFERRED);</b>
-<b class="fc">&nbsp;                if (this.repository.saveTransfer(cardToCardMoneyTransfer)) {</b>
-<b class="fc">&nbsp;                    transferJournal.logToJournal(cardToCardMoneyTransfer.toString());</b>
-<b class="fc">&nbsp;                    return cardToCardMoneyTransfer;</b>
-&nbsp;                    
-&nbsp;                }
-<b class="fc">&nbsp;                throw new OutOfService(&quot;Service unavailable, please, try again later&quot;);</b>
-&nbsp;
-&nbsp;            } else {
-<b class="fc">&nbsp;                throw new IllegalArgumentException(&quot;Wrong verification code&quot;); //код</b>
-&nbsp;            }
-&nbsp;        }
-<b class="fc">&nbsp;        throw new IllegalArgumentException(&quot;Transfer declined, outdated&quot;);</b>
-&nbsp;
-&nbsp;    }
-&nbsp;
-&nbsp;    public void setTransferJournal(TransferLogger transferJournal) {
-<b class="fc">&nbsp;        this.transferJournal = transferJournal;</b>
+&nbsp;    @Override
+&nbsp;    public Optional&lt;CardToCardMoneyTransfer&gt; getCardToCardMoneyTransferByTransferId(String transferId) {
+<b class="fc">&nbsp;        return Optional.ofNullable(cardToCardTransferList.get(transferId));</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    @Override
-&nbsp;    public String verificationCode() {
-<b class="fc">&nbsp;        return (String) &quot;0000&quot;;</b>
+&nbsp;    public boolean saveTransfer(CardToCardMoneyTransfer cardToCardMoneyTransfer) {
+<b class="fc">&nbsp;        cardToCardTransferList.put(cardToCardMoneyTransfer.getTransferId(), cardToCardMoneyTransfer);</b>
+<b class="fc">&nbsp;        if(cardToCardTransferList.containsKey(cardToCardMoneyTransfer.getTransferId())){</b>
+<b class="fc">&nbsp;            return true;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return false;</b>
 &nbsp;    }
 &nbsp;
-&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean isTransferInList(String transferId) {
+<b class="fc">&nbsp;        if (cardToCardTransferList.containsKey(transferId)) {</b>
+<b class="fc">&nbsp;            return true;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return false;</b>
+&nbsp;    }
 &nbsp;}
 </code>
 </pre>
@@ -194,7 +158,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-04-27 12:13</div>
+    <div style="float:right;">generated on 2023-05-08 18:01</div>
 </div>
 </body>
 </html>

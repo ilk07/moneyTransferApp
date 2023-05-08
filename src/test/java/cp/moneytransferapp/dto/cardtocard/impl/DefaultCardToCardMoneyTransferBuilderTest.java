@@ -1,5 +1,6 @@
 package cp.moneytransferapp.dto.cardtocard.impl;
 
+import cp.moneytransferapp.config.AppProperties;
 import cp.moneytransferapp.dto.cardtocard.CardToCardMoneyTransferDTO;
 import cp.moneytransferapp.dto.cardtocard.TransferConfirmationDTO;
 import cp.moneytransferapp.entities.Amount;
@@ -8,6 +9,8 @@ import cp.moneytransferapp.entities.TransferConfirmation;
 import cp.moneytransferapp.entities.TransferOperationId;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -23,7 +26,11 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class DefaultCardToCardMoneyTransferBuilderTest {
 
-    DefaultCardToCardMoneyTransferBuilder sut;
+    @InjectMocks
+    private DefaultCardToCardMoneyTransferBuilder sut = new DefaultCardToCardMoneyTransferBuilder();
+
+    @Mock
+    private AppProperties appProperties;
 
     @BeforeAll
     public static void startClassTest() {
@@ -35,11 +42,6 @@ class DefaultCardToCardMoneyTransferBuilderTest {
         System.out.println("---DefaultCardToCardMoneyTransferBuilder Class Test Completed---");
     }
 
-    @BeforeEach
-    public void initOneTest() {
-        sut = new DefaultCardToCardMoneyTransferBuilder();
-    }
-
     @Test
     @DisplayName("DefaultCardToCardMoneyTransferBuilder is Instance of DefaultCardToCardMoneyTransferBuilder")
     public void sutIsInstanceOfDefaultCardToCardMoneyTransferBuilder() {
@@ -47,43 +49,21 @@ class DefaultCardToCardMoneyTransferBuilderTest {
     }
 
     @Test
-    @DisplayName("DefaultCardToCardMoneyTransferBuilder properties")
-    public void defaultCardToCardMoneyTransferBuilder_hasFeeProperties() {
-        assertThat(sut, hasProperty("fee"));
-    }
-
-    @Test
-    @DisplayName("Set fee")
-    void setFee() {
-        double expected = 212.0;
-        sut.setFee(expected);
-        final var actual = sut.getFee();
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    @DisplayName("Get fee")
-    void getFee() {
-        double expected = 212.0;
-        sut.setFee(expected);
-        final var actual = sut.getFee();
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
     @DisplayName("Calculate fee")
     void calculateFee_shouldReturnIntFeeValue() {
-        sut.setFee(1.0);
-        int expected = 1;
 
-        final var actual = sut.calculateFee(100);
-        assertEquals(expected, actual);
+        when(appProperties.getTaxFee()).thenReturn(10.0);
+        sut.calculateFee(100);
+        int expected = 10;
+
+        assertEquals(expected, sut.calculateFee(100));
+
     }
 
     @Test
     void cardToCardMoneyTransferFromDTO_shouldReturnCardToCardMoneyTransferObject_withGivenFieldValues() {
+
+        when(appProperties.getTaxFee()).thenReturn(1.0);
 
         final Amount amountMock = mock(Amount.class);
         final CardToCardMoneyTransferDTO cardToCardMoneyTransferDTOMock = mock(CardToCardMoneyTransferDTO.class);
@@ -95,7 +75,6 @@ class DefaultCardToCardMoneyTransferBuilderTest {
         when(cardToCardMoneyTransferDTOMock.getAmount().getValue()).thenReturn(100);
 
         final var actual = sut.cardToCardMoneyTransferFromDTO(cardToCardMoneyTransferDTOMock);
-
 
         assertInstanceOf(CardToCardMoneyTransfer.class, actual);
         assertThat(actual, allOf(

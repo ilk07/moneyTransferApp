@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > TransferRepository</title>
+  <title>Coverage Report > DefaultTransferService</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -18,19 +18,80 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">cp.moneytransferapp.repository</a>
+    <a href="../index.html">cp.moneytransferapp.service.impl</a>
 </div>
 
-<h1>Coverage Summary for Class: TransferRepository (cp.moneytransferapp.repository)</h1>
+<h1>Coverage Summary for Class: DefaultTransferService (cp.moneytransferapp.service.impl)</h1>
 
 <table class="coverageStats">
+
 <tr>
   <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
 </tr>
 <tr>
-  <td class="name">TransferRepository</td>
+  <td class="name">DefaultTransferService</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (2/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    40%
+  </span>
+  <span class="absValue">
+    (8/20)
+  </span>
+</td>
 </tr>
-
+  <tr>
+    <td class="name">DefaultTransferService$MockitoMock$pGJUX1un</td>
+  </tr>
+  <tr>
+    <td class="name">DefaultTransferService$MockitoMock$pGJUX1un$auxiliary$n5gFtvmK</td>
+  </tr>
+  <tr>
+    <td class="name">DefaultTransferService$MockitoMock$pGJUX1un$auxiliary$OZUH2ow5</td>
+  </tr>
+  <tr>
+    <td class="name">DefaultTransferService$MockitoMock$pGJUX1un$auxiliary$se91O65b</td>
+  </tr>
+  <tr>
+    <td class="name">DefaultTransferService$MockitoMock$pGJUX1un$auxiliary$vRk09qoU</td>
+  </tr>
+  <tr>
+    <td class="name">DefaultTransferService$MockitoMock$pGJUX1un$auxiliary$yWQ55Ilc</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (2/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    40%
+  </span>
+  <span class="absValue">
+    (8/20)
+  </span>
+</td>
+</tr>
 </table>
 
 <br/>
@@ -38,18 +99,64 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package cp.moneytransferapp.repository;
+<code class="sourceCode" id="sourceCode">&nbsp;package cp.moneytransferapp.service.impl;
 &nbsp;
 &nbsp;import cp.moneytransferapp.entities.CardToCardMoneyTransfer;
+&nbsp;import cp.moneytransferapp.entities.TransferConfirmation;
+&nbsp;import cp.moneytransferapp.entities.TransferStatus;
+&nbsp;import cp.moneytransferapp.logger.impl.TransferLogger;
+&nbsp;import cp.moneytransferapp.repository.impl.TransferRepositoryInMemory;
+&nbsp;import cp.moneytransferapp.service.TransferService;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Service;
 &nbsp;
-&nbsp;import java.util.Optional;
+&nbsp;@Service
+&nbsp;public class DefaultTransferService implements TransferService {
+&nbsp;    private final TransferRepositoryInMemory repository;
 &nbsp;
-&nbsp;public interface TransferRepository {
-&nbsp;    boolean saveTransfer(CardToCardMoneyTransfer cardToCardMoneyTransfer);
+&nbsp;    @Autowired
+&nbsp;    private final TransferLogger transferJournal;
 &nbsp;
-&nbsp;    boolean isTransferInList(String transferId);
+<b class="fc">&nbsp;    public DefaultTransferService(TransferRepositoryInMemory repository) {</b>
+<b class="fc">&nbsp;        this.repository = repository;</b>
+<b class="fc">&nbsp;        this.transferJournal = TransferLogger.getInstance();</b>
+&nbsp;    }
 &nbsp;
-&nbsp;    Optional&lt;CardToCardMoneyTransfer&gt; getCardToCardMoneyTransferByTransferId(String transferId);
+&nbsp;    public CardToCardMoneyTransfer transferRequest(CardToCardMoneyTransfer cardToCardMoneyTransfer) {
+<b class="nc">&nbsp;        cardToCardMoneyTransfer.setVerificationCode(verificationCode());</b>
+<b class="nc">&nbsp;        cardToCardMoneyTransfer.setStatus(TransferStatus.AWAITING_CONFIRMATION);</b>
+<b class="nc">&nbsp;        if (this.repository.saveTransfer(cardToCardMoneyTransfer)) {</b>
+<b class="nc">&nbsp;            transferJournal.logToJournal(cardToCardMoneyTransfer.toString());</b>
+<b class="nc">&nbsp;            return cardToCardMoneyTransfer;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        throw new IllegalArgumentException(&quot;Unable to update verification code&quot;); //код</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public CardToCardMoneyTransfer confirmTransferOperation(TransferConfirmation transferConfirmation) {
+&nbsp;
+<b class="fc">&nbsp;        CardToCardMoneyTransfer cardToCardMoneyTransfer = this.repository.getCardToCardMoneyTransferByTransferId(transferConfirmation.getOperationId())</b>
+<b class="fc">&nbsp;                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Unknown transfer id&quot;));</b>
+&nbsp;
+<b class="fc">&nbsp;        if (cardToCardMoneyTransfer.getStatus().equals(TransferStatus.AWAITING_CONFIRMATION)) {</b>
+<b class="fc">&nbsp;            if (cardToCardMoneyTransfer.getVerificationCode().equals(transferConfirmation.getCode())) {</b>
+<b class="nc">&nbsp;                cardToCardMoneyTransfer.setStatus(TransferStatus.CONFIRMED_TRANSFERRED);</b>
+<b class="nc">&nbsp;                if (this.repository.saveTransfer(cardToCardMoneyTransfer)) {</b>
+<b class="nc">&nbsp;                    transferJournal.logToJournal(cardToCardMoneyTransfer.toString());</b>
+<b class="nc">&nbsp;                    return cardToCardMoneyTransfer;</b>
+&nbsp;                }
+&nbsp;            } else {
+<b class="fc">&nbsp;                throw new IllegalArgumentException(&quot;Wrong verification code&quot;); //код</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        throw new IllegalArgumentException(&quot;Transfer declined, outdated&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public String verificationCode() {
+<b class="nc">&nbsp;        return (String) &quot;0000&quot;;</b>
+&nbsp;    }
+&nbsp;
 &nbsp;
 &nbsp;}
 </code>
@@ -75,7 +182,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-04-27 12:13</div>
+    <div style="float:right;">generated on 2023-05-08 18:01</div>
 </div>
 </body>
 </html>

@@ -7,6 +7,7 @@ import cp.moneytransferapp.entities.CardToCardMoneyTransfer;
 import cp.moneytransferapp.entities.TransferConfirmation;
 import cp.moneytransferapp.entities.TransferOperationId;
 import cp.moneytransferapp.service.impl.DefaultTransferService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -14,22 +15,15 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin()
+@RequiredArgsConstructor()
 public class DefaultTransferController {
     private final DefaultCardToCardMoneyTransferBuilder transferDTOBuilder;
     private final DefaultTransferService service;
 
-
-    public DefaultTransferController(DefaultCardToCardMoneyTransferBuilder cardToCardMoneyTransferBuilder, DefaultTransferService service) {
-        this.transferDTOBuilder = cardToCardMoneyTransferBuilder;
-        this.service = service;
-
-    }
-
     @PostMapping(value = "transfer", consumes = "application/json", produces = "application/json")
     public TransferOperationId cardToCardMoneyTransfer(@Valid @RequestBody CardToCardMoneyTransferDTO cardToCardMoneyTransferDTO) {
         CardToCardMoneyTransfer cardToCardMoneyTransfer = transferDTOBuilder.cardToCardMoneyTransferFromDTO(cardToCardMoneyTransferDTO);
-
         return transferDTOBuilder.transferOperationIdFromCardToCardMoneyTransfer(service.transferRequest(cardToCardMoneyTransfer));
     }
 
@@ -40,5 +34,4 @@ public class DefaultTransferController {
 
         return transferDTOBuilder.transferOperationIdFromCardToCardMoneyTransfer(cardToCardMoneyTransfer);
     }
-
 }

@@ -35,9 +35,7 @@ class TransferConfirmationDTOTest {
 
     @BeforeEach
     public void initOneTest() {
-        sut = new TransferConfirmationDTO();
-        sut.setOperationId("test_Id");
-        sut.setCode("test_Code");
+        sut = new TransferConfirmationDTO("test_Id", "test_Code");
     }
 
     @Test

@@ -6,6 +6,5 @@ services:
     ports:
       - '5500:5500'
     environment:
-      port: 5500
-      transfer.tax.fee: 1
-      transfer.log.filename: transfer-journal.log
+      transfer.taxFee: 1.0
+      transfer.logFilename: transfer-journal.log

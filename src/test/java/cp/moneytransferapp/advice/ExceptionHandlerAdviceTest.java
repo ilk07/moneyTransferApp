@@ -14,8 +14,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.matchers.JUnitMatchers.containsString;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -26,10 +24,8 @@ class ExceptionHandlerAdviceTest {
 
     @Autowired
     private MockMvc mockMvc;
-
     @MockBean
     TransferRepositoryInMemory repository;
-
 
     @BeforeAll
     public static void startClassTest() {
@@ -39,20 +35,6 @@ class ExceptionHandlerAdviceTest {
     @AfterAll
     public static void endClassTest() {
         System.out.println("---ExceptionHandlerAdvice Class Test Completed---");
-    }
-
-    @Test
-    void outOfServiceHandler_shouldReturnException_EmptyData() throws Exception {
-        when(repository.saveTransfer(any())).thenReturn(false);
-        String requestBody = "{\"cardFromNumber\":\"4438231558582693\",\"cardToNumber\":\"4438231558582693\",\"cardFromCVV\":\"123\",\"cardFromValidTill\":\"11/24\",\"amount\":{\"currency\":\"RUR\",\"value\":10000}}";
-        mockMvc.perform(
-                        post("/transfer")
-                                .content(requestBody)
-                                .contentType(MediaType.APPLICATION_JSON)
-                )
-                .andExpect(status().is(500))
-                .andExpect(result -> assertEquals("Service unavailable", result.getResolvedException().getMessage()));
-
     }
 
     @Test

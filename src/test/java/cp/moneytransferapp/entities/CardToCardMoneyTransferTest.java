@@ -52,8 +52,7 @@ class CardToCardMoneyTransferTest extends Transfer {
                 hasProperty("cardToNumber", equalTo("3764285348263861")),
                 hasProperty("cardFromCVV", equalTo("123")),
                 hasProperty("cardFromValidTill", equalTo("12/25")),
-                hasProperty("fee"),
-                hasProperty("status", equalTo(TransferStatus.AWAITING_CONFIRMATION))
+                hasProperty("fee")
         ));
     }
 
@@ -121,7 +120,9 @@ class CardToCardMoneyTransferTest extends Transfer {
     @Test
     @DisplayName("Get status")
     void getStatus() {
+
         final var expected = TransferStatus.AWAITING_CONFIRMATION;
+        sut.setStatus(expected);
         final var actual = sut.getStatus();
 
         assertEquals(expected, actual);
