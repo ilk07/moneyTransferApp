@@ -1,5 +1,6 @@
 package cp.moneytransferapp.dto.cardtocard.impl;
 
+import cp.moneytransferapp.config.AppProperties;
 import cp.moneytransferapp.dto.cardtocard.CardToCardMoneyTransferDTO;
 import cp.moneytransferapp.dto.cardtocard.CardToCardMoneyTransferDTOBuilder;
 import cp.moneytransferapp.dto.cardtocard.TransferConfirmationDTO;
@@ -7,23 +8,17 @@ import cp.moneytransferapp.entities.CardToCardMoneyTransfer;
 import cp.moneytransferapp.entities.TransferConfirmation;
 import cp.moneytransferapp.entities.TransferOperationId;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties("transfer.tax")
 @NoArgsConstructor
 public class DefaultCardToCardMoneyTransferBuilder implements CardToCardMoneyTransferDTOBuilder {
+    @Autowired
+    private AppProperties appProperties;
 
-    private double fee;
-    public void setFee(double fee) {
-        this.fee = fee;
-    }
-    public double getFee() {
-        return fee;
-    }
-    protected int calculateFee(int value) {
-        return (int) ((fee / 100) * value);
+    public int calculateFee(int value) {
+        return (int) ((appProperties.getTaxFee() / 100) * value);
     }
 
     @Override
@@ -34,8 +29,7 @@ public class DefaultCardToCardMoneyTransferBuilder implements CardToCardMoneyTra
                 cardToCardMoneyTransferDTO.getCardFromCVV(),
                 cardToCardMoneyTransferDTO.getCardFromValidTill(),
                 cardToCardMoneyTransferDTO.getAmount(),
-                calculateFee(cardToCardMoneyTransferDTO.getAmount().getValue())
-        );
+                calculateFee(cardToCardMoneyTransferDTO.getAmount().getValue()));
     }
 
     @Override
@@ -45,10 +39,7 @@ public class DefaultCardToCardMoneyTransferBuilder implements CardToCardMoneyTra
 
     @Override
     public TransferConfirmation transferConfirmationFromDTO(TransferConfirmationDTO transferConfirmationDTO) {
-        return new TransferConfirmation(
-                transferConfirmationDTO.getOperationId(),
-                transferConfirmationDTO.getCode()
-        );
+        return new TransferConfirmation(transferConfirmationDTO.getOperationId(), transferConfirmationDTO.getCode());
     }
 
 }
